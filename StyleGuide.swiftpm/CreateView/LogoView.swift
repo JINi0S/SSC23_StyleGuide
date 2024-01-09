@@ -12,16 +12,9 @@ struct LogoView: View {
     
     @State var isShowImagePicker = false
     @State var selectedUIImage: UIImage?
-    //@State var imageData: Data?
-    @Binding var text: String
-    func loadImage() {
-        guard let selectedImage = selectedUIImage else { return }
-        appUserData.styleGuide.logo.logoImage = Image(uiImage: selectedImage)
-    }
     
     var body: some View {
         HStack(spacing: 32) {
-            
             VStack {
                 if let image = appUserData.styleGuide.logo.logoImage {
                     image
@@ -41,9 +34,7 @@ struct LogoView: View {
             }
             .clipShape(RoundedRectangle(cornerRadius: 40))
             .frame(width: 300, height: 300)
-            .onAppear {
-                text = "Embrace simplicity. Simple icons tend to be easier for people to understand and recognize.\nFind a concept or element that captures the essence of your app,\nmake it the focus point of the icon, and express it in a simple, unique way."
-            }
+          
             VStack(alignment: .leading, spacing: 12) {
                 Text("Icon File")
                     .font(.system(size: 18, weight: .semibold))
@@ -72,11 +63,9 @@ struct LogoView: View {
                         .frame(width: 180, height: 60)
                         .background(.gray.opacity(0.2))
                         .cornerRadius(15)
-                        
                     })
-                    
                 }
-            }//.frame(maxWidth: 400)
+            }
         }
         .padding(32)
         .sheet(isPresented: $isShowImagePicker, onDismiss: {
@@ -85,5 +74,9 @@ struct LogoView: View {
             ImagePicker(image: $selectedUIImage)
         }
     }
+    
+    private func loadImage() {
+        guard let selectedImage = selectedUIImage else { return }
+        appUserData.styleGuide.logo.logoImage = Image(uiImage: selectedImage)
+    }
 }
-

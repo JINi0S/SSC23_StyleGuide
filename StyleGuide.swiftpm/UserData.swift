@@ -7,12 +7,22 @@
 
 import SwiftUI
 
+class UserData: ObservableObject {    
+    @Published var styleGuide: StyleGuide = StyleGuide.initialStyle
+}
 
-class UserData: ObservableObject {
-    //    @Published var designSystems: [DesignSystem] = []
-    // var id:UUID?
+struct StyleGuide: Identifiable {
+    var id = UUID()
     
-    @Published var styleGuide: StyleGuide = StyleGuide(
+    var logo: LogoComponent
+    var profile: ProfileComponent
+    var color: ColorComponent
+    var typo: TypoCategory
+    var button: [ButtonComponent]
+    var toggle: ToggleComponent
+    var noti: NotiComponent
+    
+    static var initialStyle = StyleGuide(
         logo: LogoComponent(),
         profile: ProfileComponent(width: 80, height: 80, cornerRadius: 20),
         color: ColorComponent(
@@ -38,55 +48,10 @@ class UserData: ObservableObject {
             dot: NotiDotValue(width: 10, height: 10),
             number: NotiNumValue(width: 28, height: 20, textWeight: .regular, textSize: 12, textColor: .white), backgroundColor: [.red, .blue])
     )
-    
 }
-
-
-struct StyleGuide: Identifiable {
-    var id = UUID()
-    
-    var logo: LogoComponent
-    var profile: ProfileComponent
-    var color: ColorComponent
-    var typo: TypoCategory
-    var button: [ButtonComponent]
-    var toggle: ToggleComponent
-    var noti: NotiComponent
-    
-}
-/*
-enum TypoCategory: String, CaseIterable {
-    case header1 = "Header1"
-    case header2 = "Header2"
-    case subtitle1 = "Subtitle1"
-    case subtitle2 = "Subtitle2"
-    case subtitle3 = "Subtitle3"
-    case body1 = "Body1"
-    case body2 = "Body2"
-    case caption1 = "Caption1"
-    case caption2 = "Caption2"
-    
-    var weight: Font.Weight {
-        switch self {
-        case .header1:
-            return .bold
-        case .header2, .subtitle1, .subtitle2, .subtitle3, .body1, .body2, .caption1, .caption2:
-            return .semibold
-        }
-    }
-    
-    var size: CGFloat {
-        switch self {
-        case .header1:
-            return 20
-        case .header2, .subtitle1, .subtitle2, .subtitle3, .body1, .body2, .caption1, .caption2:
-            return 16
-        }
-    }
-}*/
 
 struct ProfileComponent {
-    var defaultProfile: Image? //?옵셔널로 두면 위의 UserData 따로 초기화안해줘도 된다.
+    var defaultProfile: Image?
     var imageProfile: Image?
 
     var width: Int
@@ -96,7 +61,6 @@ struct ProfileComponent {
 
 struct TypoComponent: Hashable {
     var weight: Font.Weight
-    
     var size: Int
 }
 
@@ -120,8 +84,6 @@ struct NotiComponent {
     var dot: NotiDotValue
     var number: NotiNumValue
     var backgroundColor: [Color]
-    
-    
 }
 
 struct NotiDotValue {
@@ -136,7 +98,6 @@ struct NotiNumValue {
     var textSize: Int
     var textColor: Color
 }
-
 
 struct LogoComponent {
     var logoImage: Image? //?옵셔널로 두면 위의 UserData 따로 초기화안해줘도 된다.
@@ -163,6 +124,7 @@ struct ColorComponent: Identifiable {
         self.subSubscription = subSubscription
         self.graySubscription = graySubscription
     }
+    
     func array(for title: String) -> [Color] {
         
         switch title {
@@ -176,6 +138,7 @@ struct ColorComponent: Identifiable {
             fatalError("Invalid title")
         }
     }
+    
     subscript(title: String, index: Int) -> Color {
         get {
             return array(for: title)[index]

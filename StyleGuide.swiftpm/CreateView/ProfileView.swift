@@ -17,27 +17,13 @@ struct ProfileView: View {
     
     @State var selectedUIImage: UIImage?
     private let inputfieldmaxWidth: CGFloat = 80
-
-    @Binding var text: String
-    
-    func loadImage(profile: String) {
-        guard let selectedImage = selectedUIImage else { return }
-        if profile == "image" {
-            appUserData.styleGuide.profile.imageProfile = Image(uiImage: selectedImage)
-        } else {
-            appUserData.styleGuide.profile.defaultProfile = Image(uiImage: selectedImage)
-        }
-        
-    }
     
     var body: some View {
         HStack {
             VStack {
                 Text("Default Profile")
                     .font(.system(size: 18, weight: .semibold))
-                    .onAppear {
-                        text = "You can help everyone feel welcome in your app by avoiding unnecessary references to specific genders.\nWhen it’s necessary to depict a generic person or people, use a nongendered human image \nto reinforce the message that generic person means human, not man or woman."
-                    }
+                
                 VStack {
                     if let image = appUserData.styleGuide.profile.defaultProfile {
                         image
@@ -55,7 +41,6 @@ struct ProfileView: View {
                             .frame(width: CGFloat(appUserData.styleGuide.profile.width),
                                    height: CGFloat(appUserData.styleGuide.profile.height))                            .background(Color.lightBlue)
                             .foregroundColor(.white)
-                            
                     }
                 }
                 .clipShape(RoundedRectangle(cornerRadius: CGFloat(appUserData.styleGuide.profile.cornerRadius)))
@@ -87,9 +72,7 @@ struct ProfileView: View {
             }
             .frame(minWidth: 400)
             
-            
             Divider().padding(.horizontal)
-            
             
             VStack(alignment: .leading, spacing: 12) {
                 Text("Default Profile File")
@@ -166,7 +149,6 @@ struct ProfileView: View {
                             .frame(maxWidth: inputfieldmaxWidth)
                             .textFieldStyle(.roundedBorder)
                         Stepper(value: $appUserData.styleGuide.profile.cornerRadius, label: {Text("")}).labelsHidden()
-                        
                     }
                 }
             }
@@ -181,6 +163,15 @@ struct ProfileView: View {
             }
         }) {
             ImagePicker(image: $selectedUIImage)
+        }
+    }
+    
+    func loadImage(profile: String) {
+        guard let selectedImage = selectedUIImage else { return }
+        if profile == "image" {
+            appUserData.styleGuide.profile.imageProfile = Image(uiImage: selectedImage)
+        } else {
+            appUserData.styleGuide.profile.defaultProfile = Image(uiImage: selectedImage)
         }
     }
 }
