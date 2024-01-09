@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-enum Fruit: String, CaseIterable {
+enum ExamTitle: String, CaseIterable {
     case Title1, Title2, Title3
 }
 //TODO: Menu에 대한 picker도 추가
@@ -16,17 +16,14 @@ struct SelectionView : View {
     
     @State var someToggle : Bool = true
     @State var someSliderValue: Float = 0.5
-    @State var selectedFruit : Fruit = .Title1
+    @State var selectedFruit : ExamTitle = .Title1
     
     private let spacing: CGFloat = 32
-    @Binding var text: String
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
                 Text("Toggle").font(.system(size: 18, weight: .semibold))
-                    .onAppear {
-                        text = "Toggle\nUse the switch toggle style only in a list row.\nChange the default color of a switch only if necessary.\nBe sure to use a color that provides enough contrast with the uncolored appearance to be perceptible.\n\nSlider\nUse familiar slider directions.\nConsider supplementing a slider with a corresponding text field and stepper. "
-                    }
 
                 Toggle("", isOn: $someToggle)
                     .toggleStyle(SwitchToggleStyle())
@@ -47,8 +44,8 @@ struct SelectionView : View {
                 
                 Text("Picker").font(.system(size: 18, weight: .semibold))
                 Picker("", selection: $selectedFruit) {
-                    ForEach(Fruit.allCases, id: \.rawValue) { fruit in
-                        Text(fruit.rawValue).tag(fruit)
+                    ForEach(ExamTitle.allCases, id: \.rawValue) { title in
+                        Text(title.rawValue).tag(title)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())

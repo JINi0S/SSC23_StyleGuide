@@ -51,7 +51,7 @@ struct TotalView: View {
             trailing:
                 Button {
                     //MARK: Save image
-                    var totalDetailViewimage = TotalDetail().environmentObject(appUserData).asUiImage()
+                    let totalDetailViewimage = TotalDetail().environmentObject(appUserData).asUiImage()
                     PHPhotoLibrary.requestAuthorization( { status in
                             print(showingAlert,"showing1")
                             switch status {
@@ -79,7 +79,7 @@ struct TotalDetail: View {
     
     @State var someToggle: Bool = true
     @State var someSliderValue: Float = 0.5
-    @State var selectedFruit: Fruit = .Title1
+    @State var selectedFruit: ExamTitle = .Title1
     
     var body: some View {
         HStack(alignment: .top) {
@@ -207,8 +207,8 @@ struct TotalDetail: View {
                 VStack(alignment: .leading) {
                     Text("Picker").font(.system(size: 14, weight: .semibold))
                     Picker("", selection: $selectedFruit) {
-                        ForEach(Fruit.allCases, id: \.rawValue) { fruit in
-                            Text(fruit.rawValue).tag(fruit)
+                        ForEach(ExamTitle.allCases, id: \.rawValue) { title in
+                            Text(title.rawValue).tag(title)
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
@@ -219,6 +219,7 @@ struct TotalDetail: View {
             .padding(8)
             .padding(.trailing, 8)
             .frame(maxWidth: 400)
+            
             VStack(alignment: .leading, spacing: 16) {
                 //MARK: Logo
                 HStack {
@@ -334,7 +335,6 @@ struct TotalDetail: View {
         .padding()
         .padding(.vertical, 50)
         .frame(minWidth: 400)
-        
         .background(.white)
     }
 }

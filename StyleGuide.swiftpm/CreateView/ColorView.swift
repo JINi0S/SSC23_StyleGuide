@@ -9,12 +9,9 @@ import SwiftUI
 
 struct ColorView: View {
     @EnvironmentObject var appUserData: UserData
-    @Binding var text: String
+    
     var body: some View {
         VStack {
-//            Text("Touch the color box to modify the color.")
-//                .font(.system(size: 16, weight: .semibold))
-//                .padding(.bottom, 32).foregroundColor(.darkBlue)
             VStack(alignment: .leading) {
                 Text("Main color")
                     .font(.system(size: 18, weight: .semibold))
@@ -42,9 +39,6 @@ struct ColorView: View {
             }
         }
         .padding(32)
-        .onAppear {
-            text = "Use color sparingly in nongame apps.\nAvoid using the same color to mean different things.\nMake sure your app’s colors work well in both light and dark appearance modes. "
-        }
     }
 }
 
@@ -56,7 +50,6 @@ struct SquareColorPickerView: View {
     var size: Int
     @State private var drawSwiftUIColor: Color = Color.lightBlue
     @State private var drawUIColor: UIColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
-    //@State private var drawHexNumber: String = "#FFFFFF"
     @State private var drawHexNumber: String = ""
     
     var body: some View {

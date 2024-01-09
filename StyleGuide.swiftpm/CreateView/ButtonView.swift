@@ -14,7 +14,6 @@ struct ButtonView: View {
     @State var buttonIndex: Int = 0
     
     private let inputfieldmaxWidth: CGFloat = 80
-    @Binding var text: String
 
     var body: some View {
         HStack {
@@ -39,10 +38,6 @@ struct ButtonView: View {
                 .cornerRadius(CGFloat(appUserData.styleGuide.button[0].cornerRadius))
                 .padding()
                 .background(buttonIndex == 0 ? .gray.opacity(0.1) : .white)
-                .onAppear {
-                    
-                    text = "Make buttons easy for people to choose.\nButtons need a hit target of at least 44x44 points to accommodate a fingertip.\nEnsure that each button clearly communicates it purpose.\nUse a filled button for the most likely action in a view.\nUse style (not size) to visually distinguish the preferred choice among multiple options. "
-                }
                 
                 Button {
                     buttonIndex = 1
@@ -63,8 +58,7 @@ struct ButtonView: View {
                 .cornerRadius(CGFloat(appUserData.styleGuide.button[1].cornerRadius))
                 .padding()
                 .background(buttonIndex == 1 ? .gray.opacity(0.1) : .white)
-                
-                
+                                
                 Button {
                     buttonIndex = 2
                 } label: {
@@ -154,7 +148,7 @@ struct ButtonView: View {
                         Text("Font Weight")
                         Spacer()
                         Picker(selection: $appUserData.styleGuide.button[buttonIndex].textWeight, label: Text("")) {
-                            PickerFontView()
+                            FontPickerView()
                         }
                     }
                     HStack {
